@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmer Portal Login | AgriTrade System</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="theme-seller">
+  <div class="auth-container">
+    <main class="auth-card">
+      <header class="auth-header">
+        <span class="role-badge">🚜 Farmer / Seller Portal</span>
+        <h1>Farmer Portal Login</h1>
+        <p>Manage crop inventory, list harvests & accept buyer orders</p>
+      </header>
+
+      <!-- Demo Credentials Banner -->
+      <section class="demo-banner">
+        <div class="demo-banner-header">
+          <span>Farmer Demo Account</span>
+          <button type="button" class="btn-autofill" id="btnAutofillFarmer">Auto-fill Demo</button>
+        </div>
+        <div class="demo-banner-body">
+          Email: <code>farmer@greenacres.com</code> | Pass: <code>Farmer@1234</code>
+        </div>
+      </section>
+
+      <form id="sellerLoginForm" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="sellerEmail">Farmer Email</label>
+            <input type="email" id="sellerEmail" class="form-control" placeholder="farmer@greenacres.com" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="sellerPassword">Password</label>
+            <div class="input-wrapper">
+              <input type="password" id="sellerPassword" class="form-control" placeholder="••••••••" required>
+              <button type="button" class="toggle-password">Show</button>
+            </div>
+            <span class="error-feedback"></span>
+          </div>
+
+          <button type="submit" class="btn-primary" id="btnSellerLogin">Access Farmer Dashboard →</button>
+        </div>
+      </form>
+
+      <footer class="auth-footer">
+        New farmer? <a href="seller-signup.html">Register Your Farm</a>
+        <br><br>
+        <a href="index.html" style="color: var(--text-muted); font-size: 0.8rem;">← Back to Role Selection</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="js/auth-shared.js"></script>
+  <script src="js/seller-login.js"></script>
+</body>
+</html>

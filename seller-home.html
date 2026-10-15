@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmer Portal | AgriSales Harvest Manager</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .inventory-form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      align-items: end;
+      background: var(--bg-input);
+      padding: 1.25rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body class="theme-seller">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <a href="index.html" class="brand-logo">
+      <span>🚜</span>
+      <span>AgriSales <small style="font-size: 0.75rem; color: #fbbf24; font-weight:600;">[Farmer Portal]</small></span>
+    </a>
+    <div class="user-profile-menu">
+      <div class="user-info">
+        <div class="user-name" id="farmerProfileName">Farmer Name</div>
+        <div class="user-role" id="farmerFarmName">Green Acres Farm</div>
+      </div>
+      <button id="btnLogout" class="btn-secondary" style="color: #fca5a5; border-color: rgba(239,68,68,0.3);">Logout 🚪</button>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="dashboard-welcome">
+      <h1>Harvest Manager & Sales Portal 🌽</h1>
+      <p>Manage your crop inventory, set price per kg in Indian Rupees (₹), and view wholesale buyer orders</p>
+    </section>
+
+    <!-- Stats Row -->
+    <div class="stats-grid">
+      <article class="stat-card">
+        <div class="stat-title">Listed Harvest Items</div>
+        <div class="stat-value" id="statHarvestCount">4 Active</div>
+        <div class="stat-trend" style="color: #fbbf24;">● Available for marketplace buyers</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-title">Pending Wholesale Orders</div>
+        <div class="stat-value">6 Orders</div>
+        <div class="stat-trend">↑ 320 kg total demand</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-title">Total Harvest Revenue</div>
+        <div class="stat-value">₹1,48,500</div>
+        <div class="stat-trend">↑ Paid directly via Escrow</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-title">Farm License Status</div>
+        <div class="stat-value" style="font-size: 1.25rem; color: #34d399;" id="statLicense">VERIFIED</div>
+        <div class="stat-trend">✓ Compliance Approved</div>
+      </article>
+    </div>
+
+    <!-- Inventory Listing Section -->
+    <section class="content-section">
+      <div class="section-header">
+        <h2 class="section-title">Add New Crop Listing</h2>
+        <span class="badge badge-warning">Direct Producer Pricing (₹)</span>
+      </div>
+
+      <form id="addCropForm" novalidate>
+        <div class="inventory-form-grid">
+          <div class="form-group">
+            <label for="cropName">Crop / Produce Name</label>
+            <input type="text" id="cropName" class="form-control" placeholder="e.g. Organic Strawberries" required>
+          </div>
+
+          <div class="form-group">
+            <label for="cropQuantity">Available Stock (kg)</label>
+            <input type="number" id="cropQuantity" class="form-control" placeholder="500" min="1" required>
+          </div>
+
+          <div class="form-group">
+            <label for="cropPrice">Price per kg (₹)</label>
+            <input type="number" id="cropPrice" class="form-control" placeholder="180" step="0.50" min="1" required>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn-primary" style="background: #f59e0b; color: #000;">+ List Produce</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Produce Name</th>
+              <th>Quantity Available</th>
+              <th>Unit Price (₹/kg)</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="inventoryTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/auth-shared.js"></script>
+  <script src="js/seller-home.js"></script>
+</body>
+</html>

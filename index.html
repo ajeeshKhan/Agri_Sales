@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriSales | Multi-Role Login</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="theme-buyer" id="bodyElement">
+  <div class="auth-container">
+    <main class="auth-card">
+      <header class="auth-header">
+        <span class="brand-badge" id="roleBadge">🌾 AgriSales Ecosystem</span>
+        <h1 id="loginTitle">Welcome Back</h1>
+        <p id="loginSubtitle">Select your role and sign in to access your portal</p>
+      </header>
+
+      <!-- Dynamic Demo Credentials Banner -->
+      <section class="demo-banner">
+        <div class="demo-banner-header">
+          <span id="demoRoleTitle">Buyer Demo Account</span>
+          <button type="button" class="btn-autofill" id="btnAutofill">Auto-fill Demo</button>
+        </div>
+        <div class="demo-banner-body" id="demoDetailsBody">
+          Email: <code>buyer@freshmarket.com</code> | Pass: <code>Buyer@1234</code>
+        </div>
+      </section>
+
+      <form id="agriSalesLoginForm" novalidate>
+        <div class="form-grid">
+          <!-- Role Selection Dropdown -->
+          <div class="form-group">
+            <label for="userRole">Select Account Role</label>
+            <select id="userRole" class="form-control" required>
+              <option value="buyer">🛒 Buyer (Wholesale Purchaser)</option>
+              <option value="seller">🚜 Seller / Farmer (Agricultural Producer)</option>
+              <option value="merchant">🧪 Agri-Merchant (Input / Fertilizer Vendor)</option>
+              <option value="admin">🛡️ Admin (System Administrator)</option>
+            </select>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="userEmail">Email Address</label>
+            <input type="email" id="userEmail" class="form-control" placeholder="buyer@freshmarket.com" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="userPassword">Password</label>
+            <div class="input-wrapper">
+              <input type="password" id="userPassword" class="form-control" placeholder="••••••••" required>
+              <button type="button" class="toggle-password">Show</button>
+            </div>
+            <span class="error-feedback"></span>
+          </div>
+
+          <button type="submit" class="btn-primary" id="btnLoginSubmit">Sign In to AgriSales →</button>
+        </div>
+      </form>
+
+      <footer class="auth-footer">
+        New to AgriSales? <a href="signup.html" id="signupLink">Create Account</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="js/auth-shared.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

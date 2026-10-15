@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Registration | AgriTrade System</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="theme-admin">
+  <div class="auth-container">
+    <main class="auth-card wide">
+      <header class="auth-header">
+        <span class="role-badge">🛡️ Administrator Onboarding</span>
+        <h1>Register New Admin</h1>
+        <p>Create an authorized administrator account with Master Access Key</p>
+      </header>
+
+      <section class="demo-banner">
+        <div class="demo-banner-header">
+          <span>Required Admin Master Key</span>
+        </div>
+        <div class="demo-banner-body">
+          Security Key: <code>ADMIN-2026-KEY</code> (Required to verify authorization)
+        </div>
+      </section>
+
+      <form id="adminSignupForm" novalidate>
+        <div class="form-grid two-col">
+          <div class="form-group">
+            <label for="adminFullName">Full Name</label>
+            <input type="text" id="adminFullName" class="form-control" placeholder="e.g. Sarah Connor" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="adminEmail">Email Address</label>
+            <input type="email" id="adminEmail" class="form-control" placeholder="sarah.c@agritrade.com" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="adminDepartment">Department / Unit</label>
+            <select id="adminDepartment" class="form-control" required>
+              <option value="">Select Department</option>
+              <option value="Security & Compliance">Security & Compliance</option>
+              <option value="Market Operations">Market Operations</option>
+              <option value="System Engineering">System Engineering</option>
+              <option value="Finance & Auditing">Finance & Auditing</option>
+            </select>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="adminKey">Admin Master Key</label>
+            <input type="text" id="adminKey" class="form-control" placeholder="ADMIN-2026-KEY" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="adminPassword">Password</label>
+            <div class="input-wrapper">
+              <input type="password" id="adminPassword" class="form-control" placeholder="Min 8 chars, 1 uppercase, 1 special" required>
+              <button type="button" class="toggle-password">Show</button>
+            </div>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="adminConfirmPassword">Confirm Password</label>
+            <div class="input-wrapper">
+              <input type="password" id="adminConfirmPassword" class="form-control" placeholder="Repeat password" required>
+              <button type="button" class="toggle-password">Show</button>
+            </div>
+            <span class="error-feedback"></span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" style="margin-top: 1.5rem;" id="btnRegisterAdmin">Create Admin Account →</button>
+      </form>
+
+      <footer class="auth-footer">
+        Already registered? <a href="admin-login.html">Sign In Here</a>
+        <br><br>
+        <a href="index.html" style="color: var(--text-muted); font-size: 0.8rem;">← Back to Role Selection</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="js/auth-shared.js"></script>
+  <script src="js/admin-signup.js"></script>
+</body>
+</html>

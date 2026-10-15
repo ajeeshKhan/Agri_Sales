@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Crop Listing | Farmer Portal</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="theme-seller">
+  <header class="dashboard-header">
+    <a href="/" class="brand-logo">
+      <span>🚜</span>
+      <span>AgriSales <small style="font-size: 0.75rem; color: #fbbf24; font-weight:600;">[Sell Crop Harvest]</small></span>
+    </a>
+    <div class="user-profile-menu">
+      <div class="user-info">
+        <div class="user-name" id="farmerProfileName">Farmer Name</div>
+        <div class="user-role" id="farmerFarmName">Green Acres Organic Farm</div>
+      </div>
+      <button id="btnLogout" class="btn-secondary" style="color: #fca5a5; border-color: rgba(239,68,68,0.3);">Logout 🚪</button>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <nav class="portal-nav-bar">
+      <a href="/seller-home/" class="portal-nav-btn">📊 Dashboard & Overview</a>
+      <a href="/farmer-sell/" class="portal-nav-btn active">🌾 Sell Produce (Veg, Rice, Grains)</a>
+      <a href="/farmer-inputs/" class="portal-nav-btn">🧪 Buy Inputs (Pesticides & Seeds)</a>
+    </nav>
+
+    <section class="dashboard-welcome">
+      <h1>Post Crop Harvest for Sale 🌾</h1>
+      <p>List your Vegetables, Rice, Food Grains, Fruits, or Pulses to connect with wholesale buyers</p>
+    </section>
+
+    <div class="auth-card wide" style="margin: 0 auto; max-width: 720px;">
+      <form id="postCropForm" novalidate>
+        <div class="form-grid two-col">
+          <div class="form-group">
+            <label for="cropCategory">Crop Category</label>
+            <select id="cropCategory" class="form-control" required>
+              <option value="vegetables">🥦 Vegetables</option>
+              <option value="rice">🍚 Rice</option>
+              <option value="grains">🌾 Food Grains</option>
+              <option value="fruits">🍎 Fruits</option>
+              <option value="pulses">🫘 Pulses / Dal</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="cropName">Crop Variety Name</label>
+            <input type="text" id="cropName" class="form-control" placeholder="e.g. Sharbati Wheat or Hybrid Tomatoes" required>
+          </div>
+
+          <div class="form-group">
+            <label for="cropPrice">Selling Price per kg (in ₹)</label>
+            <input type="number" id="cropPrice" class="form-control" placeholder="e.g. 45.00" step="0.5" required>
+          </div>
+
+          <div class="form-group">
+            <label for="cropStock">Total Harvest Quantity (in kg)</label>
+            <input type="number" id="cropStock" class="form-control" placeholder="e.g. 500" required>
+          </div>
+
+          <div class="form-group">
+            <label for="cropTag">Quality / Organic Tag</label>
+            <input type="text" id="cropTag" class="form-control" placeholder="e.g. Certified Organic, Grade A">
+          </div>
+
+          <div class="form-group">
+            <label for="harvestDate">Harvest Date</label>
+            <input type="date" id="harvestDate" class="form-control" required>
+          </div>
+
+          <div style="grid-column: 1 / -1; margin-top: 0.5rem;">
+            <button type="submit" class="btn-primary" style="background: #f59e0b; color: #000; font-size: 1rem;">Publish Crop Listing to Marketplace →</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script src="{% static 'js/auth-shared.js' %}"></script>
+  <script src="{% static 'js/farmer-sell.js' %}"></script>
+</body>
+</html>

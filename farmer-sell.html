@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sell Produce | AgriSales Farmer Portal</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .sell-form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: clamp(1.25rem, 3vw, 2rem);
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body class="theme-seller">
+  <!-- Header Nav -->
+  <header class="dashboard-header">
+    <a href="index.html" class="brand-logo">
+      <span>🚜</span>
+      <span>AgriSales <small style="font-size: 0.75rem; color: #fbbf24; font-weight:600;">[Farmer Portal]</small></span>
+    </a>
+    <div class="user-profile-menu">
+      <div class="user-info">
+        <div class="user-name" id="farmerProfileName">Farmer Name</div>
+        <div class="user-role" id="farmerFarmName">Green Acres Farm</div>
+      </div>
+      <button id="btnLogout" class="btn-secondary" style="color: #fca5a5; border-color: rgba(239,68,68,0.3);">Logout 🚪</button>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <!-- Sub Navigation for Farmer Portals -->
+    <nav class="portal-nav-bar">
+      <a href="seller-home.html" class="portal-nav-btn">📊 Dashboard & Overview</a>
+      <a href="farmer-sell.html" class="portal-nav-btn active">🌾 Sell Produce (Veg, Rice, Grains)</a>
+      <a href="farmer-inputs.html" class="portal-nav-btn">🧪 Buy Inputs (Pesticides & Seeds)</a>
+    </nav>
+
+    <section class="dashboard-welcome">
+      <h1>List Crop Harvest for Sale 🥦🍚🌾</h1>
+      <p>Sell Vegetables, Rice, Grains, Fruits, and Pulses directly to wholesale market buyers in Indian Rupees (₹)</p>
+    </section>
+
+    <!-- Create Crop Listing Form -->
+    <section class="sell-form-card">
+      <div class="section-header">
+        <h2 class="section-title">Post New Crop Listing</h2>
+        <span class="badge badge-warning">Direct Buyer Connect</span>
+      </div>
+
+      <form id="sellProduceForm" novalidate>
+        <div class="form-grid two-col">
+          <div class="form-group">
+            <label for="produceCategory">Produce Category</label>
+            <select id="produceCategory" class="form-control" required>
+              <option value="">Select Category</option>
+              <option value="vegetables">🥦 Fresh Vegetables</option>
+              <option value="rice">🍚 Rice Crops (Basmati, Kolam, Sonamasuri)</option>
+              <option value="grains">🌾 Food Grains & Wheat</option>
+              <option value="fruits">🍎 Fresh Fruits</option>
+              <option value="pulses">🫘 Pulses & Lentils</option>
+            </select>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="produceName">Crop / Item Name</label>
+            <input type="text" id="produceName" class="form-control" placeholder="e.g. Organic Shimla Apples / Basmati Rice" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="produceStock">Available Quantity (in kg)</label>
+            <input type="number" id="produceStock" class="form-control" placeholder="e.g. 500" min="1" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="producePrice">Wholesale Price per kg (₹)</label>
+            <input type="number" id="producePrice" class="form-control" placeholder="e.g. 160" step="0.50" min="1" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="produceHarvestDate">Harvest Date</label>
+            <input type="date" id="produceHarvestDate" class="form-control" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="produceQualityTag">Quality Certification</label>
+            <select id="produceQualityTag" class="form-control" required>
+              <option value="Certified Organic">Organic Certified</option>
+              <option value="Grade A Premium">Grade A Premium</option>
+              <option value="Non-GMO Fresh">Non-GMO Fresh</option>
+              <option value="Standard Harvest">Standard Harvest</option>
+            </select>
+            <span class="error-feedback"></span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" style="margin-top: 1.5rem; background: #f59e0b; color: #000;" id="btnPostProduce">Publish Listing to Marketplace →</button>
+      </form>
+    </section>
+
+    <!-- Farmer Active Listings Table -->
+    <section class="content-section">
+      <div class="section-header">
+        <h2 class="section-title">Your Live Marketplace Listings</h2>
+        <span class="badge badge-success" id="activeListingBadge">Live</span>
+      </div>
+
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Produce Name</th>
+              <th>Category</th>
+              <th>Stock (kg)</th>
+              <th>Price (₹/kg)</th>
+              <th>Quality Tag</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="farmerListingsTable">
+            <!-- Dynamically rendered -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/auth-shared.js"></script>
+  <script src="js/farmer-sell.js"></script>
+</body>
+</html>

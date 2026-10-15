@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation & Live Tracking | AgriSales</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .tracking-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: clamp(1.25rem, 3vw, 2rem);
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body class="theme-buyer">
+  <!-- Header Nav -->
+  <header class="dashboard-header">
+    <a href="index.html" class="brand-logo">
+      <span>🚚</span>
+      <span>AgriSales <small style="font-size: 0.75rem; color: #34d399; font-weight:600;">[Order Tracking & Status]</small></span>
+    </a>
+    <div class="user-profile-menu">
+      <a href="buyer-home.html" class="btn-secondary">Back to Marketplace</a>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <!-- Success Banner -->
+    <div class="cart-summary" style="background: rgba(16, 185, 129, 0.15); border-color: #059669; margin-bottom: 1.5rem;">
+      <div>
+        <strong style="color: #34d399; font-size: 1.25rem;">🎉 Order Placed & Confirmed!</strong>
+        <p style="color: var(--text-muted); font-size: 0.85rem;" id="orderIdHeader">Order #AGRI-89421 | Payment Status: Paid via UPI</p>
+      </div>
+      <button class="btn-secondary" onclick="window.print()" style="border-color: #34d399; color: #34d399;">🖨️ Download Invoice</button>
+    </div>
+
+    <!-- Live Tracking Visual Timeline -->
+    <section class="tracking-card">
+      <div class="section-header">
+        <h2 class="section-title">Live Delivery Status Timeline</h2>
+        <span class="badge badge-success" id="estDeliveryBadge">Est. Delivery: Tomorrow, 2:00 PM</span>
+      </div>
+
+      <div class="tracking-timeline">
+        <div class="tracking-step completed">
+          <div class="step-icon">✓</div>
+          <div class="step-label">Order Placed</div>
+        </div>
+
+        <div class="tracking-step completed">
+          <div class="step-icon">📦</div>
+          <div class="step-label">Packed by Farmer</div>
+        </div>
+
+        <div class="tracking-step active">
+          <div class="step-icon">🚚</div>
+          <div class="step-label">In Transit</div>
+        </div>
+
+        <div class="tracking-step">
+          <div class="step-icon">🏁</div>
+          <div class="step-label">Delivered</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Order Details Grid -->
+    <div class="form-grid two-col" style="margin-bottom: 2rem;">
+      <!-- Delivery Address & Driver Info -->
+      <section class="content-section">
+        <h3 class="section-title" style="margin-bottom: 1rem;">Shipping & Delivery Details</h3>
+        <div style="font-size: 0.9rem; line-height: 1.6; color: var(--text-muted);">
+          <p><strong>Recipient:</strong> <span id="trackBuyerName">Alex Johnson</span></p>
+          <p><strong>Contact:</strong> <span id="trackPhone">+91 98765-43210</span></p>
+          <p><strong>Delivery Address:</strong> <span id="trackAddress">APMC Market, Vashi, Navi Mumbai</span></p>
+          <p><strong>Assigned Agri-Courier:</strong> Green Express Logistics (Vehicle: MH-12-AG-4421)</p>
+          <p><strong>Farmer Origin:</strong> <span id="trackFarmerName">Green Acres Organic Farm</span></p>
+        </div>
+      </section>
+
+      <!-- Items Breakdown -->
+      <section class="content-section">
+        <h3 class="section-title" style="margin-bottom: 1rem;">Items Purchased</h3>
+        <div id="trackItemsList">
+          <!-- Dynamically populated -->
+        </div>
+        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; font-weight: 800; font-size: 1.15rem; color: #34d399;">
+          <span>Total Paid (INR):</span>
+          <span id="trackTotalPaid">₹0.00</span>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/auth-shared.js"></script>
+  <script src="js/buyer-tracking.js"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agri-Merchant Portal | AgriSales</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <style>
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.25rem;
+    }
+  </style>
+</head>
+<body class="theme-merchant">
+  <header class="dashboard-header">
+    <a href="/" class="brand-logo">
+      <span>🧪</span>
+      <span>AgriSales <small style="font-size: 0.75rem; color: #22d3ee; font-weight:600;">[Agri-Merchant Portal]</small></span>
+    </a>
+    <div class="user-profile-menu">
+      <div class="user-info">
+        <div class="user-name" id="merchantName">Rajesh Kumar</div>
+        <div class="user-role" id="merchantStore">Kisan Agri Supplies & Fertilizers</div>
+      </div>
+      <button id="btnLogout" class="btn-secondary" style="color: #fca5a5; border-color: rgba(239,68,68,0.3);">Logout 🚪</button>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="dashboard-welcome">
+      <h1>Agri-Inputs & Supplies Vendor Portal 🧪🌱</h1>
+      <p>List Pesticides, Fertilizers, Hybrid Seeds, and Crop Medicines for local farmers in Indian Rupees (₹)</p>
+    </section>
+
+    <div class="stats-grid">
+      <article class="stat-card">
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Total Supplies Revenue</div>
+        <div style="font-size: 1.75rem; font-weight: 800; color: #22d3ee;">₹84,200</div>
+        <div style="font-size: 0.75rem; color: #34d399;">↑ 18% month over month</div>
+      </article>
+
+      <article class="stat-card">
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Active Supply Goods</div>
+        <div style="font-size: 1.75rem; font-weight: 800; color: #22d3ee;" id="merchantGoodsCount">5</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">Pesticides, Seeds & Manure</div>
+      </article>
+
+      <article class="stat-card">
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Farmer Orders Filled</div>
+        <div style="font-size: 1.75rem; font-weight: 800; color: var(--text-main);">28</div>
+        <div style="font-size: 0.75rem; color: #22d3ee;">● 100% On-time dispatch</div>
+      </article>
+    </div>
+
+    <!-- Add New Input Item Form -->
+    <section class="content-section" style="margin-bottom: 2rem;">
+      <h2 class="section-title" style="margin-bottom: 1rem;">+ Add New Pesticide / Fertilizer / Seed Product</h2>
+      <form id="addInputProductForm">
+        <div class="form-grid two-col">
+          <div class="form-group">
+            <label for="inputCat">Input Category</label>
+            <select id="inputCat" class="form-control" required>
+              <option value="pesticides">🧪 Pesticide / Insecticide</option>
+              <option value="manure">🌱 Fertilizer / Organic Manure</option>
+              <option value="seeds">🌾 Hybrid Seeds</option>
+              <option value="medicines">💊 Crop Medicine / Fungicide</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="inputTitle">Product Brand & Name</label>
+            <input type="text" id="inputTitle" class="form-control" placeholder="e.g. Bio-Shield Neem Oil 1L" required>
+          </div>
+
+          <div class="form-group">
+            <label for="inputPrice">Unit Price (in ₹)</label>
+            <input type="number" id="inputPrice" class="form-control" placeholder="e.g. 450.00" step="0.5" required>
+          </div>
+
+          <div class="form-group">
+            <label for="inputUnit">Package Unit</label>
+            <input type="text" id="inputUnit" class="form-control" placeholder="e.g. Liter, 50kg Bag, Packet" required>
+          </div>
+
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="inputDesc">Product Function & Dosage Description</label>
+            <input type="text" id="inputDesc" class="form-control" placeholder="e.g. Organic bio-pesticide for bollworm control" required>
+          </div>
+
+          <div style="grid-column: 1 / -1;">
+            <button type="submit" class="btn-primary" style="background: #06b6d4; color: #fff;">Publish Input Product to Farmer Store →</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- Merchant Listed Inventory -->
+    <section class="content-section">
+      <h2 class="section-title" style="margin-bottom: 1rem;">Your Supply Catalog</h2>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Package Unit</th>
+              <th>Price per Unit (₹)</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody id="merchantTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="{% static 'js/auth-shared.js' %}"></script>
+  <script src="{% static 'js/merchant-home.js' %}"></script>
+</body>
+</html>

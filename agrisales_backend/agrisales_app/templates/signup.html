@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | AgriSales</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body id="bodyElement" class="theme-buyer">
+  <div class="auth-container">
+    <main class="auth-card wide">
+      <div class="auth-header">
+        <div class="brand-badge" id="roleBadge">🛒 Buyer Registration</div>
+        <h1>Create AgriSales Account</h1>
+        <p>Choose your account role to unlock customized fields</p>
+      </div>
+
+      <form id="agriSalesSignupForm" novalidate>
+        <div class="form-grid two-col">
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="userRole">Account Role</label>
+            <select id="userRole" class="form-control" required>
+              <option value="buyer" selected>🛒 Buyer (Wholesale Purchaser)</option>
+              <option value="seller">🚜 Farmer (Crop Seller)</option>
+              <option value="merchant">🧪 Agri-Merchant (Input / Fertilizer Vendor)</option>
+              <option value="admin">🛡️ Administrator</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" class="form-control" placeholder="Alex Johnson" required>
+          </div>
+
+          <div class="form-group">
+            <label for="userEmail">Email Address</label>
+            <input type="email" id="userEmail" class="form-control" placeholder="buyer@freshmarket.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Mobile Phone Number</label>
+            <input type="tel" id="phone" class="form-control" placeholder="+91 98765-43210" required>
+          </div>
+
+          <div class="form-group">
+            <label for="userPassword">Password</label>
+            <div class="input-wrapper">
+              <input type="password" id="userPassword" class="form-control" placeholder="Min 8 characters (Pass@1234)" required>
+              <button type="button" class="toggle-password" tabindex="-1">Show</button>
+            </div>
+          </div>
+
+          <!-- Dynamic Role Specific Fields -->
+          <div class="role-fields-container" id="roleSpecificFieldsContainer">
+            <!-- Dynamically populated via JS -->
+          </div>
+
+          <div style="grid-column: 1 / -1;">
+            <button type="submit" class="btn-primary" id="btnSubmit">Create Account →</button>
+          </div>
+        </div>
+      </form>
+
+      <footer class="auth-footer">
+        Already registered? <a href="/">Sign In here</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="{% static 'js/auth-shared.js' %}"></script>
+  <script src="{% static 'js/signup.js' %}"></script>
+</body>
+</html>

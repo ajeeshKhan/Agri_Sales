@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Tracking & Confirmation | AgriSales</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <style>
+    .tracking-timeline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      margin: 2rem 0;
+      padding: 0 1rem;
+    }
+    .tracking-timeline::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 0; right: 0;
+      height: 4px;
+      background: var(--border-color);
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+    .timeline-progress {
+      position: absolute;
+      top: 50%; left: 0;
+      height: 4px;
+      background: #10b981;
+      z-index: 2;
+      transform: translateY(-50%);
+      transition: width 0.4s ease;
+    }
+    .timeline-step {
+      position: relative;
+      z-index: 3;
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      transition: all 0.3s ease;
+    }
+    .timeline-step.completed {
+      background: #10b981;
+      border-color: #10b981;
+      color: white;
+    }
+    .timeline-step.active {
+      background: #0f172a;
+      border-color: #34d399;
+      color: #34d399;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.25);
+    }
+    .timeline-labels {
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: -0.5rem;
+    }
+    .timeline-label-item {
+      width: 25%;
+    }
+    .timeline-label-item.active {
+      color: #34d399;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="theme-buyer">
+  <!-- Header Nav -->
+  <header class="dashboard-header">
+    <a href="/" class="brand-logo">
+      <span>🌾</span>
+      <span>AgriSales <small style="font-size: 0.75rem; color: #34d399; font-weight:600;">[Order Tracking]</small></span>
+    </a>
+    <div class="user-profile-menu">
+      <a href="/buyer-home/" class="btn-secondary">← Back to Marketplace</a>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="dashboard-welcome">
+      <h1>Order Tracking & Status 🚚</h1>
+      <p>Real-time delivery progress for your agricultural produce order</p>
+    </section>
+
+    <!-- Tracking Timeline Card -->
+    <div class="content-section">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+        <div>
+          <h2 style="font-size: 1.2rem; font-weight: 800;" id="trackOrderId">Order #AGRI-894210</h2>
+          <p style="color: var(--text-muted); font-size: 0.85rem;" id="trackOrderDate">Placed on: August 20, 2026</p>
+        </div>
+        <span class="badge badge-success" id="trackStatusBadge" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;">Status: In Transit 🚚</span>
+      </div>
+
+      <!-- Timeline Bar -->
+      <div class="tracking-timeline">
+        <div class="timeline-progress" id="timelineProgressBar" style="width: 66%;"></div>
+        <div class="timeline-step completed" id="step1">✓</div>
+        <div class="timeline-step completed" id="step2">✓</div>
+        <div class="timeline-step active" id="step3">3</div>
+        <div class="timeline-step" id="step4">4</div>
+      </div>
+      <div class="timeline-labels">
+        <div class="timeline-label-item active">Order Placed<br><small style="color: var(--text-muted);">Verified</small></div>
+        <div class="timeline-label-item active">Packed by Farmer<br><small style="color: var(--text-muted);">Ready</small></div>
+        <div class="timeline-label-item active">In Transit<br><small style="color: #34d399;">On the road</small></div>
+        <div class="timeline-label-item">Delivered<br><small style="color: var(--text-muted);">APMC Yard</small></div>
+      </div>
+    </div>
+
+    <!-- Order & Logistics Details Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+      <div class="content-section">
+        <h3 class="section-title" style="font-size: 1rem; margin-bottom: 1rem;">📦 Order Items Purchased</h3>
+        <div id="orderItemsSummary">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <div class="content-section">
+        <h3 class="section-title" style="font-size: 1rem; margin-bottom: 1rem;">🚚 Dispatch & Logistics Details</h3>
+        <div style="font-size: 0.875rem; line-height: 1.8;">
+          <div>Farmer Supplier: <strong id="trackFarmerName">Green Acres Organic Farm</strong></div>
+          <div>Delivery Address: <strong id="trackDeliveryAddr">APMC Market, Vashi, Navi Mumbai</strong></div>
+          <div>Payment Method: <strong id="trackPayMethod" style="color: #34d399;">UPI / Instant Pay</strong></div>
+          <div>Est. Delivery Time: <strong id="trackEstDelivery" style="color: #fbbf24;">Tomorrow by 2:00 PM</strong></div>
+          <div>Courier Transport: <strong>Kisan Express Logistics (Truck #MH-12-AQ-8891)</strong></div>
+        </div>
+
+        <button onclick="window.print()" class="btn-secondary" style="margin-top: 1.25rem; width: 100%;">🖨️ Print Tax Invoice / Receipt</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="{% static 'js/auth-shared.js' %}"></script>
+  <script src="{% static 'js/buyer-tracking.js' %}"></script>
+</body>
+</html>

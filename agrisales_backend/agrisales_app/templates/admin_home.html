@@ -1,0 +1,272 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Management Console | AgriSales</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <style>
+    .admin-actions-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 520px;
+      padding: 1.75rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+<body class="theme-admin">
+  <header class="dashboard-header">
+    <a href="/" class="brand-logo">
+      <span>🛡️</span>
+      <span>AgriSales <small style="font-size: 0.75rem; color: #818cf8; font-weight:600;">[Admin Console]</small></span>
+    </a>
+    <div class="user-profile-menu">
+      <div class="user-info">
+        <div class="user-name" id="currentAdminName">Admin User</div>
+        <div class="user-role" id="currentAdminDept">Security & Operations</div>
+      </div>
+      <button id="btnLogout" class="btn-secondary" style="color: #fca5a5; border-color: rgba(239,68,68,0.3);">Logout 🚪</button>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="dashboard-welcome">
+      <h1>Admin User & Marketplace Management 🛡️</h1>
+      <p>Add, edit, or remove Farmers, Buyers, Merchants, and Manage Live Marketplace Items</p>
+    </section>
+
+    <div class="stats-grid">
+      <article class="stat-card">
+        <div class="stat-title">Total Registered Accounts</div>
+        <div class="stat-value" id="statUserCount">4</div>
+        <div class="stat-trend">↑ Farmers, Buyers & Merchants</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-title">Farmers (Sellers)</div>
+        <div class="stat-value" id="statFarmerCount">1</div>
+        <div class="stat-trend" style="color: #fbbf24;">● Produce Suppliers</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-title">Wholesale Buyers</div>
+        <div class="stat-value" id="statBuyerCount">1</div>
+        <div class="stat-trend" style="color: #34d399;">● Produce Purchasers</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-title">Agri-Merchants</div>
+        <div class="stat-value" id="statMerchantCount">1</div>
+        <div class="stat-trend" style="color: #22d3ee;">● Fertilizer & Seed Vendors</div>
+      </article>
+    </div>
+
+    <!-- User Management Section -->
+    <section class="content-section">
+      <div class="admin-actions-bar">
+        <div>
+          <h2 class="section-title">User Accounts Management</h2>
+          <p style="font-size: 0.825rem; color: var(--text-muted);">Manage Farmers, Buyers, Merchants, and System Admins</p>
+        </div>
+        <button class="btn-primary" style="width: auto; background: #6366f1;" onclick="openAddUserModal()">+ Add New User / Farmer / Merchant</button>
+      </div>
+
+      <div class="filter-tabs" style="margin-bottom: 1rem;">
+        <button class="tab-btn active" onclick="filterUserRole('all')">All Accounts</button>
+        <button class="tab-btn" onclick="filterUserRole('seller')">🚜 Farmers (Sellers)</button>
+        <button class="tab-btn" onclick="filterUserRole('buyer')">🛒 Buyers</button>
+        <button class="tab-btn" onclick="filterUserRole('merchant')">🧪 Agri-Merchants</button>
+        <button class="tab-btn" onclick="filterUserRole('admin')">🛡️ Admins</button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>User Name</th>
+              <th>Email Address</th>
+              <th>System Role</th>
+              <th>Contact Phone</th>
+              <th>Business / Farm Info</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody">
+            <!-- Dynamically populated via JS with Edit & Delete actions -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Marketplace Items & Produce Management Section -->
+    <section class="content-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Marketplace Items & Produce Inventory</h2>
+          <p style="font-size: 0.825rem; color: var(--text-muted);">Edit prices, update stock, or remove crops & supplies</p>
+        </div>
+        <span class="badge badge-info" id="liveItemCountBadge">8 Items Live</span>
+      </div>
+
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>Category</th>
+              <th>Seller / Merchant</th>
+              <th>Stock Qty</th>
+              <th>Price (₹)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="itemsTableBody">
+            <!-- Dynamically populated via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL 1: ADD NEW USER -->
+  <div class="modal-overlay" id="addUserModal">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3 style="font-size: 1.15rem; font-weight: 700;">+ Add New System Account</h3>
+        <button onclick="closeModal('addUserModal')" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.25rem;">✕</button>
+      </div>
+
+      <form id="adminAddUserForm" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="newUserRole">Account Role</label>
+            <select id="newUserRole" class="form-control" required onchange="toggleAddUserRoleFields()">
+              <option value="seller">🚜 Farmer (Seller)</option>
+              <option value="buyer">🛒 Buyer</option>
+              <option value="merchant">🧪 Agri-Merchant</option>
+              <option value="admin">🛡️ Admin</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="newUserName">Full Name</label>
+            <input type="text" id="newUserName" class="form-control" placeholder="Ramesh Patil" required>
+          </div>
+
+          <div class="form-group">
+            <label for="newUserEmail">Email Address</label>
+            <input type="email" id="newUserEmail" class="form-control" placeholder="ramesh@agrisales.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="newUserPhone">Phone Number</label>
+            <input type="tel" id="newUserPhone" class="form-control" placeholder="+91 94221-88900" required>
+          </div>
+
+          <div class="form-group">
+            <label for="newUserPassword">Password</label>
+            <input type="password" id="newUserPassword" class="form-control" placeholder="Min 8 chars (e.g. Pass@1234)" required>
+          </div>
+
+          <div class="form-group" id="detailFieldGroup">
+            <label for="newUserDetail" id="detailFieldLabel">Farm Name / Business Info</label>
+            <input type="text" id="newUserDetail" class="form-control" placeholder="Green Acres Farm, Nashik">
+          </div>
+
+          <button type="submit" class="btn-primary" style="background: #6366f1;">Create Account →</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: EDIT USER -->
+  <div class="modal-overlay" id="editUserModal">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3 style="font-size: 1.15rem; font-weight: 700;">✏️ Edit User Details</h3>
+        <button onclick="closeModal('editUserModal')" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.25rem;">✕</button>
+      </div>
+
+      <form id="adminEditUserForm" novalidate>
+        <input type="hidden" id="editUserTargetEmail">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="editUserName">Full Name</label>
+            <input type="text" id="editUserName" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="editUserPhone">Phone Number</label>
+            <input type="tel" id="editUserPhone" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="editUserDetail">Farm / Store / Business Detail</label>
+            <input type="text" id="editUserDetail" class="form-control">
+          </div>
+
+          <button type="submit" class="btn-primary" style="background: #6366f1;">Save Changes ✓</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 3: EDIT ITEM -->
+  <div class="modal-overlay" id="editItemModal">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3 style="font-size: 1.15rem; font-weight: 700;">✏️ Edit Produce / Item Price & Stock</h3>
+        <button onclick="closeModal('editItemModal')" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.25rem;">✕</button>
+      </div>
+
+      <form id="adminEditItemForm" novalidate>
+        <input type="hidden" id="editItemTargetId">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="editItemName">Item Name</label>
+            <input type="text" id="editItemName" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="editItemPrice">Price per Unit (₹)</label>
+            <input type="number" id="editItemPrice" class="form-control" step="0.50" required>
+          </div>
+
+          <div class="form-group">
+            <label for="editItemStock">Available Stock Qty</label>
+            <input type="number" id="editItemStock" class="form-control" required>
+          </div>
+
+          <button type="submit" class="btn-primary" style="background: #6366f1;">Update Item →</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="{% static 'js/auth-shared.js' %}"></script>
+  <script src="{% static 'js/admin-home.js' %}"></script>
+</body>
+</html>

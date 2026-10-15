@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmer Overview & Inventory | AgriSales</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <style>
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.25rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
+    }
+    .stat-title {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+    .stat-trend {
+      font-size: 0.75rem;
+      color: #34d399;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="theme-seller">
+  <header class="dashboard-header">
+    <a href="/" class="brand-logo">
+      <span>🚜</span>
+      <span>AgriSales <small style="font-size: 0.75rem; color: #fbbf24; font-weight:600;">[Farmer Portal]</small></span>
+    </a>
+    <div class="user-profile-menu">
+      <div class="user-info">
+        <div class="user-name" id="farmerProfileName">Ramesh Patil</div>
+        <div class="user-role" id="farmerFarmName">Green Acres Organic Farm</div>
+      </div>
+      <button id="btnLogout" class="btn-secondary" style="color: #fca5a5; border-color: rgba(239,68,68,0.3);">Logout 🚪</button>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <nav class="portal-nav-bar">
+      <a href="/seller-home/" class="portal-nav-btn active">📊 Dashboard & Overview</a>
+      <a href="/farmer-sell/" class="portal-nav-btn">🌾 Sell Produce (Veg, Rice, Grains)</a>
+      <a href="/farmer-inputs/" class="portal-nav-btn">🧪 Buy Inputs (Pesticides & Seeds)</a>
+    </nav>
+
+    <section class="dashboard-welcome">
+      <h1>Farm Overview & Harvest Analytics 📊</h1>
+      <p>Welcome back, <strong id="welcomeFarmerName" style="color: #fbbf24;">Farmer</strong>! Monitor crop listings, incoming buyer orders, and supply inventory.</p>
+    </section>
+
+    <div class="stats-grid">
+      <article class="stat-card">
+        <div class="stat-title">Total Produce Sales (₹)</div>
+        <div class="stat-value">₹1,84,500</div>
+        <div class="stat-trend">↑ 14% vs last month</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-title">Active Crop Listings</div>
+        <div class="stat-value" id="statProduceCount">4</div>
+        <div class="stat-trend" style="color: #fbbf24;">● In Live Marketplace</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-title">Incoming Buyer Orders</div>
+        <div class="stat-value">12</div>
+        <div class="stat-trend" style="color: #38bdf8;">● 3 Pending Packing</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-title">Total Harvest Stock</div>
+        <div class="stat-value">2,150 kg</div>
+        <div class="stat-trend">Across 4 crop categories</div>
+      </article>
+    </div>
+
+    <section class="content-section">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2 class="section-title">Your Live Crop Inventory</h2>
+        <a href="/farmer-sell/" class="btn-primary" style="width: auto; padding: 0.45rem 1rem; background: #f59e0b; color:#000;">+ Post New Harvest</a>
+      </div>
+
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Crop Name</th>
+              <th>Category</th>
+              <th>Price per kg (₹)</th>
+              <th>Stock Available</th>
+              <th>Quality Tag</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="farmerProduceTable">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="{% static 'js/auth-shared.js' %}"></script>
+  <script src="{% static 'js/seller-home.js' %}"></script>
+</body>
+</html>

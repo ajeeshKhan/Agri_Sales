@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fresh Produce Marketplace | AgriSales</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <style>
+    .marketplace-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      border-color: #34d399;
+    }
+    .product-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.1);
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+    .stock-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      float: right;
+    }
+    .order-status-alert {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 0.85rem 1.25rem;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body class="theme-buyer">
+  <!-- Header Nav -->
+  <header class="dashboard-header">
+    <a href="/" class="brand-logo">
+      <span>🌾</span>
+      <span>AgriSales <small style="font-size: 0.75rem; color: #34d399; font-weight:600;">[Buyer Marketplace]</small></span>
+    </a>
+    <div class="user-profile-menu">
+      <a href="/buyer-tracking/" class="btn-secondary" style="border-color: #38bdf8; color: #38bdf8;">Track Orders 🚚</a>
+      <div class="user-info">
+        <div class="user-name" id="buyerProfileName">Buyer User</div>
+        <div class="user-role" id="buyerProfileAddress">Verified Wholesale Buyer</div>
+      </div>
+      <button id="btnLogout" class="btn-secondary" style="color: #fca5a5; border-color: rgba(239,68,68,0.3);">Logout 🚪</button>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="dashboard-welcome">
+      <h1>Fresh Produce Marketplace 🥦🍚🌾🍎</h1>
+      <p>Select required quantity (kg / quintal) and order directly from certified farmers in Indian Rupees (₹)</p>
+    </section>
+
+    <!-- Active Orders Alert Banner -->
+    <div class="order-status-alert" id="activeOrdersBanner" style="display: none;">
+      <div>
+        <strong style="color: #38bdf8;">🚚 Active Order In Transit!</strong>
+        <p style="color: var(--text-muted); font-size: 0.85rem;" id="recentOrderInfo">Order #AGRI-89421 - Farm Gate Delivery by Tomorrow, 2:00 PM</p>
+      </div>
+      <a href="/buyer-tracking/" class="btn-secondary" style="border-color: #38bdf8; color: #38bdf8;">View Live Map & Tracking →</a>
+    </div>
+
+    <!-- Cart Summary Header Banner -->
+    <div class="cart-summary">
+      <div>
+        <strong style="color: #34d399; font-size: 1.1rem;">Shopping Cart Active</strong>
+        <p style="color: var(--text-muted); font-size: 0.85rem;" id="cartItemCount">0 items selected (₹0.00)</p>
+      </div>
+      <a href="/buyer-checkout/" class="btn-primary" id="btnGoCheckout" style="width: auto; padding: 0.55rem 1.35rem;">Proceed to Secure Checkout →</a>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="tab-btn active" onclick="filterProduce('all')">All Produce</button>
+      <button class="tab-btn" onclick="filterProduce('vegetables')">🥦 Vegetables</button>
+      <button class="tab-btn" onclick="filterProduce('rice')">🍚 Rice</button>
+      <button class="tab-btn" onclick="filterProduce('grains')">🌾 Food Grains</button>
+      <button class="tab-btn" onclick="filterProduce('fruits')">🍎 Fruits</button>
+      <button class="tab-btn" onclick="filterProduce('pulses')">🫘 Pulses / Dal</button>
+    </div>
+
+    <!-- Marketplace Products Grid -->
+    <section class="content-section">
+      <div class="section-header">
+        <h2 class="section-title">Farmer Crop Listings</h2>
+        <span class="badge badge-success">Direct Farm Gate</span>
+      </div>
+
+      <div class="marketplace-grid" id="productsGrid">
+        <!-- Dynamically rendered cards with +/- quantity pickers -->
+      </div>
+    </section>
+  </main>
+
+  <script src="{% static 'js/auth-shared.js' %}"></script>
+  <script src="{% static 'js/buyer-home.js' %}"></script>
+</body>
+</html>

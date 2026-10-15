@@ -1,0 +1,272 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriSales | Secure Multi-Step Checkout</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <style>
+    .checkout-stepper-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 1.5rem;
+    }
+    @media (max-width: 900px) {
+      .checkout-stepper-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="theme-buyer">
+  <!-- Top Navigation Header -->
+  <header class="dashboard-header">
+    <a href="/" class="brand-logo">
+      <span>🌾</span>
+      <span>AgriSales <small style="font-size: 0.75rem; color: #34d399; font-weight:600;">[100% Safe & Secure Checkout]</small></span>
+    </a>
+    <div class="user-profile-menu">
+      <a href="/buyer-home/" class="btn-secondary">← Back to Marketplace</a>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="dashboard-welcome" style="margin-bottom: 1.5rem;">
+      <h1>Multi-Step Secure Checkout 🛒</h1>
+      <p>Confirm address, review produce quantities, and complete secure payment in Indian Rupees (₹)</p>
+    </section>
+
+    <div class="checkout-stepper-layout">
+      <!-- Left Column: 4-Step Accordion Stepper -->
+      <div>
+        <!-- STEP 1: USER LOGIN & CONTACT -->
+        <div class="checkout-step-card completed" id="stepCard1">
+          <div class="step-header" onclick="toggleStep(1)">
+            <div class="step-num">✓</div>
+            <div class="step-title-text">1. USER LOGIN & CONTACT</div>
+            <div class="step-summary-text" id="step1Summary">Alex Johnson (+91 98765-43210)</div>
+            <button type="button" class="btn-secondary" style="font-size: 0.75rem; padding: 0.2rem 0.5rem;">Change</button>
+          </div>
+          <div class="step-body">
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Logged in as: <strong id="step1UserEmail" style="color: var(--text-main);">buyer@freshmarket.com</strong></p>
+            <button type="button" class="btn-primary" style="width: auto; padding: 0.5rem 1rem;" onclick="toggleStep(2)">Continue to Delivery Address →</button>
+          </div>
+        </div>
+
+        <!-- STEP 2: DELIVERY ADDRESS -->
+        <div class="checkout-step-card active" id="stepCard2">
+          <div class="step-header" onclick="toggleStep(2)">
+            <div class="step-num">2</div>
+            <div class="step-title-text">2. DELIVERY ADDRESS</div>
+            <div class="step-summary-text" id="step2Summary">Vashi APMC Mandi, Navi Mumbai</div>
+          </div>
+          <div class="step-body">
+            <div class="address-card-grid">
+              <label class="address-card selected" id="addrCard1">
+                <input type="radio" name="selectedAddr" value="APMC Mandi, Vashi" checked>
+                <strong style="color: #34d399;">APMC Market Yard (Default)</strong>
+                <p style="font-size: 0.825rem; color: var(--text-muted); margin-top: 0.35rem;">
+                  Plot 42, Sector 18, Vashi, Navi Mumbai, Maharashtra - 400703
+                </p>
+                <div style="font-size: 0.775rem; color: var(--text-main); margin-top: 0.4rem;">Ph: +91 98765-43210</div>
+              </label>
+
+              <label class="address-card" id="addrCard2">
+                <input type="radio" name="selectedAddr" value="Central Cold Storage Warehouse">
+                <strong>Cold Storage Warehouse</strong>
+                <p style="font-size: 0.825rem; color: var(--text-muted); margin-top: 0.35rem;">
+                  Gala 104, Industrial Cold Chain Park, Bhiwandi, Thane - 421302
+                </p>
+                <div style="font-size: 0.775rem; color: var(--text-main); margin-top: 0.4rem;">Ph: +91 98220-11223</div>
+              </label>
+            </div>
+
+            <form id="addAddressForm" style="margin-top: 1rem; border-top: 1px dashed var(--border-color); padding-top: 1rem;">
+              <h4 style="font-size: 0.9rem; margin-bottom: 0.75rem;">+ Deliver to a Different Address</h4>
+              <div class="form-grid two-col">
+                <div class="form-group">
+                  <label for="newAddrName">Full Name</label>
+                  <input type="text" id="newAddrName" class="form-control" placeholder="Recipient Name">
+                </div>
+                <div class="form-group">
+                  <label for="newAddrPhone">Mobile Number</label>
+                  <input type="tel" id="newAddrPhone" class="form-control" placeholder="+91 90000-00000">
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label for="newAddrText">Full Street Address & Pincode</label>
+                  <input type="text" id="newAddrText" class="form-control" placeholder="House/Shop No, Street, City, Pincode">
+                </div>
+              </div>
+            </form>
+
+            <button type="button" class="btn-primary" style="margin-top: 1.25rem;" onclick="confirmAddressStep()">Deliver Here & Continue to Order Summary →</button>
+          </div>
+        </div>
+
+        <!-- STEP 3: ORDER SUMMARY & QUANTITY ADJUSTMENT -->
+        <div class="checkout-step-card" id="stepCard3">
+          <div class="step-header" onclick="toggleStep(3)">
+            <div class="step-num">3</div>
+            <div class="step-title-text">3. ORDER SUMMARY</div>
+            <div class="step-summary-text" id="step3Summary">Review Cart Items & Quantities</div>
+          </div>
+          <div class="step-body">
+            <div id="checkoutCartItems">
+              <!-- Dynamically populated cart items with +/- steppers -->
+            </div>
+
+            <div style="margin-top: 1.25rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.85rem; border-radius: 10px; font-size: 0.85rem; color: #34d399;">
+              🚚 <strong>Guaranteed Farm Gate Delivery:</strong> Expected by Tomorrow, 2:00 PM
+            </div>
+
+            <button type="button" class="btn-primary" style="margin-top: 1.25rem;" onclick="confirmOrderSummaryStep()">Continue to Payment Options →</button>
+          </div>
+        </div>
+
+        <!-- STEP 4: PAYMENT OPTIONS -->
+        <div class="checkout-step-card" id="stepCard4">
+          <div class="step-header" onclick="toggleStep(4)">
+            <div class="step-num">4</div>
+            <div class="step-title-text">4. PAYMENT OPTIONS</div>
+            <div class="step-summary-text" id="step4Summary">UPI, Cards, NetBanking, COD</div>
+          </div>
+          <div class="step-body">
+            <form id="paymentAccordionForm" novalidate>
+              <div class="form-grid">
+                <!-- Option 1: UPI -->
+                <div class="payment-option selected" style="flex-direction: column; align-items: flex-start;">
+                  <label style="display: flex; align-items: center; gap: 0.75rem; width: 100%; cursor: pointer;">
+                    <input type="radio" name="payMethod" value="UPI" checked onclick="switchPayTab('upi')">
+                    <div>
+                      <strong>📱 UPI / Instant Pay (GPay, PhonePe, Paytm, BHIM)</strong>
+                      <div style="font-size: 0.775rem; color: var(--text-muted);">Pay directly from your UPI App or VPA ID</div>
+                    </div>
+                  </label>
+                  
+                  <div id="tabUpi" style="margin-top: 0.85rem; width: 100%; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+                    <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Enter UPI ID (e.g. buyer@okaxis):</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                      <input type="text" id="upiIdInput" class="form-control" placeholder="mobileNumber@upi" value="9876543210@paytm">
+                      <button type="button" class="btn-secondary" style="white-space: nowrap;" onclick="showToast('UPI VPA Verified ✓', 'success')">Verify</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Option 2: Credit / Debit Card -->
+                <div class="payment-option" style="flex-direction: column; align-items: flex-start;">
+                  <label style="display: flex; align-items: center; gap: 0.75rem; width: 100%; cursor: pointer;">
+                    <input type="radio" name="payMethod" value="Card" onclick="switchPayTab('card')">
+                    <div>
+                      <strong>💳 Credit / Debit / ATM Card</strong>
+                      <div style="font-size: 0.775rem; color: var(--text-muted);">Visa, MasterCard, RuPay, Maestro</div>
+                    </div>
+                  </label>
+
+                  <div id="tabCard" style="display: none; margin-top: 0.85rem; width: 100%; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+                    <div class="form-grid two-col">
+                      <div class="form-group" style="grid-column: span 2;">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" id="cardNumber" class="form-control" placeholder="4532 •••• •••• 8942" maxlength="19">
+                      </div>
+                      <div class="form-group">
+                        <label for="cardExpiry">Valid Thru (MM/YY)</label>
+                        <input type="text" id="cardExpiry" class="form-control" placeholder="12/28" maxlength="5">
+                      </div>
+                      <div class="form-group">
+                        <label for="cardCvv">CVV Code</label>
+                        <input type="password" id="cardCvv" class="form-control" placeholder="•••" maxlength="4">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Option 3: Net Banking -->
+                <div class="payment-option" style="flex-direction: column; align-items: flex-start;">
+                  <label style="display: flex; align-items: center; gap: 0.75rem; width: 100%; cursor: pointer;">
+                    <input type="radio" name="payMethod" value="NetBanking" onclick="switchPayTab('netbanking')">
+                    <div>
+                      <strong>🏦 Net Banking</strong>
+                      <div style="font-size: 0.775rem; color: var(--text-muted);">All major Indian banks supported</div>
+                    </div>
+                  </label>
+
+                  <div id="tabNetbanking" style="display: none; margin-top: 0.85rem; width: 100%; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+                    <select id="bankSelect" class="form-control">
+                      <option value="SBI">State Bank of India (SBI)</option>
+                      <option value="HDFC">HDFC Bank</option>
+                      <option value="ICICI">ICICI Bank</option>
+                      <option value="Axis">Axis Bank</option>
+                      <option value="Kotak">Kotak Mahindra Bank</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Option 4: Cash on Delivery (COD) -->
+                <div class="payment-option" style="flex-direction: column; align-items: flex-start;">
+                  <label style="display: flex; align-items: center; gap: 0.75rem; width: 100%; cursor: pointer;">
+                    <input type="radio" name="payMethod" value="COD" onclick="switchPayTab('cod')">
+                    <div>
+                      <strong>💵 Cash on Delivery (COD)</strong>
+                      <div style="font-size: 0.775rem; color: var(--text-muted);">Pay cash upon physical produce inspection</div>
+                    </div>
+                  </label>
+
+                  <div id="tabCod" style="display: none; margin-top: 0.85rem; width: 100%; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Enter Security Verification Code:</div>
+                    <div class="captcha-container">
+                      <span class="captcha-code" id="captchaCodeVal">8 4 9 2</span>
+                      <input type="text" id="captchaInput" class="form-control" placeholder="Enter Code" style="width: 120px;" maxlength="4">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn-primary" style="margin-top: 1.5rem; font-size: 1.05rem;" id="btnCompletePayment">Confirm & Place Order (₹) →</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Price Details Sidebar -->
+      <div>
+        <aside class="price-details-card">
+          <div class="price-header">PRICE DETAILS</div>
+
+          <div class="price-row">
+            <span>Price (<span id="priceItemsCount">0 items</span>):</span>
+            <span id="subtotalVal">₹0.00</span>
+          </div>
+
+          <div class="price-row">
+            <span>Farm Transportation:</span>
+            <span style="color: #34d399;">FREE <s style="color: var(--text-muted); font-size: 0.8rem;">₹250</s></span>
+          </div>
+
+          <div class="price-row">
+            <span>Mandi Cess & GST (5%):</span>
+            <span id="taxVal">₹0.00</span>
+          </div>
+
+          <div class="price-row total">
+            <span>Total Amount Payable:</span>
+            <span id="totalVal" style="color: #34d399;">₹0.00</span>
+          </div>
+
+          <div class="savings-tag">
+            🎉 You will save ₹250 on transportation for this order!
+          </div>
+
+          <div style="margin-top: 1.25rem; font-size: 0.775rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;">
+            <span>🛡️</span>
+            <span>100% Safe & Secure Payments | AgriSales Purchase Guarantee</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <script src="{% static 'js/auth-shared.js' %}"></script>
+  <script src="{% static 'js/buyer-checkout.js' %}"></script>
+</body>
+</html>

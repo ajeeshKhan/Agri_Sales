@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agri-Inputs & Supplies | Farmer Portal</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <style>
+    .inputs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .input-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .input-card:hover {
+      transform: translateY(-4px);
+      border-color: #fbbf24;
+    }
+    .vendor-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.15);
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body class="theme-seller">
+  <header class="dashboard-header">
+    <a href="/" class="brand-logo">
+      <span>🚜</span>
+      <span>AgriSales <small style="font-size: 0.75rem; color: #fbbf24; font-weight:600;">[Farmer Supplies Store]</small></span>
+    </a>
+    <div class="user-profile-menu">
+      <div class="user-info">
+        <div class="user-name" id="farmerProfileName">Farmer Name</div>
+        <div class="user-role" id="farmerFarmName">Green Acres Farm</div>
+      </div>
+      <button id="btnLogout" class="btn-secondary" style="color: #fca5a5; border-color: rgba(239,68,68,0.3);">Logout 🚪</button>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <nav class="portal-nav-bar">
+      <a href="/seller-home/" class="portal-nav-btn">📊 Dashboard & Overview</a>
+      <a href="/farmer-sell/" class="portal-nav-btn">🌾 Sell Produce (Veg, Rice, Grains)</a>
+      <a href="/farmer-inputs/" class="portal-nav-btn active">🧪 Buy Inputs (Pesticides & Seeds)</a>
+    </nav>
+
+    <section class="dashboard-welcome">
+      <h1>Purchase Pesticides, Medicines, Fertilizers & Seeds 🧪</h1>
+      <p>Select required quantity and purchase direct from licensed Agri-Merchants in Indian Rupees (₹)</p>
+    </section>
+
+    <div class="cart-summary" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3);">
+      <div>
+        <strong style="color: #fbbf24; font-size: 1.1rem;">Farmer Inputs Basket</strong>
+        <p style="color: var(--text-muted); font-size: 0.85rem;" id="inputCartCount">0 supplies selected (₹0.00)</p>
+      </div>
+      <button class="btn-secondary" id="btnCheckoutInputs" style="border-color: #f59e0b; color: #fbbf24;">Buy Selected Inputs →</button>
+    </div>
+
+    <div class="filter-tabs">
+      <button class="tab-btn active" onclick="filterInputs('all')">All Supplies</button>
+      <button class="tab-btn" onclick="filterInputs('pesticides')">🧪 Pesticides</button>
+      <button class="tab-btn" onclick="filterInputs('manure')">🌱 Fertilizers & Manure</button>
+      <button class="tab-btn" onclick="filterInputs('seeds')">🌾 Seeds</button>
+      <button class="tab-btn" onclick="filterInputs('medicines')">💊 Crop Medicines</button>
+    </div>
+
+    <section class="content-section">
+      <div class="section-header">
+        <h2 class="section-title">Verified Agri-Merchant Goods</h2>
+        <span class="badge badge-warning">Government Licensed</span>
+      </div>
+
+      <div class="inputs-grid" id="inputsGrid">
+        <!-- Dynamically rendered with +/- quantity steppers -->
+      </div>
+    </section>
+  </main>
+
+  <script src="{% static 'js/auth-shared.js' %}"></script>
+  <script src="{% static 'js/farmer-inputs.js' %}"></script>
+</body>
+</html>

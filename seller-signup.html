@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmer Sign Up | AgriTrade Producer Registration</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="theme-seller">
+  <div class="auth-container">
+    <main class="auth-card wide">
+      <header class="auth-header">
+        <span class="role-badge">🚜 Producer Registration</span>
+        <h1>Register Farm & Produce</h1>
+        <p>Join the AgriTrade network to sell directly to wholesale buyers & markets</p>
+      </header>
+
+      <form id="sellerSignupForm" novalidate>
+        <div class="form-grid two-col">
+          <div class="form-group">
+            <label for="sellerFullName">Farmer / Representative Name</label>
+            <input type="text" id="sellerFullName" class="form-control" placeholder="Robert Green" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="sellerEmail">Email Address</label>
+            <input type="email" id="sellerEmail" class="form-control" placeholder="farmer@greenacres.com" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="sellerFarmName">Farm / Agriculture Business Name</label>
+            <input type="text" id="sellerFarmName" class="form-control" placeholder="Green Acres Organic Farm" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="sellerFarmRegion">Farm Region / Location</label>
+            <input type="text" id="sellerFarmRegion" class="form-control" placeholder="Central Valley, CA" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="sellerCropCategory">Primary Crop Category</label>
+            <select id="sellerCropCategory" class="form-control" required>
+              <option value="">Select Primary Produce</option>
+              <option value="fruits-veg">Fresh Fruits & Vegetables</option>
+              <option value="grains">Grains & Pulses</option>
+              <option value="organic">Certified Organic Products</option>
+              <option value="dairy-poultry">Dairy & Livestock</option>
+            </select>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="sellerLicenseId">Agri License / Registration ID</label>
+            <input type="text" id="sellerLicenseId" class="form-control" placeholder="FARM-CA-98741" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="sellerPhone">Contact Phone Number</label>
+            <input type="tel" id="sellerPhone" class="form-control" placeholder="+1 555-014-9922" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="sellerPassword">Password</label>
+            <div class="input-wrapper">
+              <input type="password" id="sellerPassword" class="form-control" placeholder="Min 8 chars, 1 uppercase, 1 special" required>
+              <button type="button" class="toggle-password">Show</button>
+            </div>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group" style="grid-column: span 2;">
+            <label for="sellerConfirmPassword">Confirm Password</label>
+            <div class="input-wrapper">
+              <input type="password" id="sellerConfirmPassword" class="form-control" placeholder="Repeat password" required>
+              <button type="button" class="toggle-password">Show</button>
+            </div>
+            <span class="error-feedback"></span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" style="margin-top: 1.5rem;" id="btnRegisterSeller">Register Farmer Account →</button>
+      </form>
+
+      <footer class="auth-footer">
+        Already registered? <a href="seller-login.html">Sign In Here</a>
+        <br><br>
+        <a href="index.html" style="color: var(--text-muted); font-size: 0.8rem;">← Back to Role Selection</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="js/auth-shared.js"></script>
+  <script src="js/seller-signup.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buyer Sign Up | Fresh Produce Marketplace</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="theme-buyer">
+  <div class="auth-container">
+    <main class="auth-card wide">
+      <header class="auth-header">
+        <span class="role-badge">🛒 Join Marketplace</span>
+        <h1>Register Buyer Account</h1>
+        <p>Connect directly with local organic farmers & purchase wholesale produce</p>
+      </header>
+
+      <form id="buyerSignupForm" novalidate>
+        <div class="form-grid two-col">
+          <div class="form-group">
+            <label for="buyerFullName">Full Name</label>
+            <input type="text" id="buyerFullName" class="form-control" placeholder="Alex Johnson" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="buyerEmail">Email Address</label>
+            <input type="email" id="buyerEmail" class="form-control" placeholder="alex@freshmarket.com" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="buyerPhone">Mobile / Phone Number</label>
+            <input type="tel" id="buyerPhone" class="form-control" placeholder="+1 555-019-2831" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="buyerBusinessType">Buyer Type</label>
+            <select id="buyerBusinessType" class="form-control" required>
+              <option value="">Select Category</option>
+              <option value="retailer">Grocery Store / Retailer</option>
+              <option value="restaurant">Restaurant / Culinary</option>
+              <option value="wholesaler">Bulk Wholesaler</option>
+              <option value="individual">Individual Household</option>
+            </select>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group" style="grid-column: span 2;">
+            <label for="buyerAddress">Delivery / Shipping Address</label>
+            <input type="text" id="buyerAddress" class="form-control" placeholder="123 Main St, Suite 400, City, State, ZIP" required>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="buyerPassword">Password</label>
+            <div class="input-wrapper">
+              <input type="password" id="buyerPassword" class="form-control" placeholder="Min 8 chars, 1 uppercase, 1 special" required>
+              <button type="button" class="toggle-password">Show</button>
+            </div>
+            <span class="error-feedback"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="buyerConfirmPassword">Confirm Password</label>
+            <div class="input-wrapper">
+              <input type="password" id="buyerConfirmPassword" class="form-control" placeholder="Repeat password" required>
+              <button type="button" class="toggle-password">Show</button>
+            </div>
+            <span class="error-feedback"></span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" style="margin-top: 1.5rem;" id="btnRegisterBuyer">Create Buyer Profile →</button>
+      </form>
+
+      <footer class="auth-footer">
+        Already have a buyer account? <a href="buyer-login.html">Sign In</a>
+        <br><br>
+        <a href="index.html" style="color: var(--text-muted); font-size: 0.8rem;">← Back to Role Selection</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="js/auth-shared.js"></script>
+  <script src="js/buyer-signup.js"></script>
+</body>
+</html>
